@@ -7,17 +7,18 @@ import streamlit as st
 
 @st.cache_data(show_spinner=False)
 def Paper_fetcher(query):
-   client = arxiv.Client()
-   search = arxiv.Search(
+   try:
+      client = arxiv.Client()
+      search = arxiv.Search(
         query=query,
         max_results=5,
         sort_by=arxiv.SortCriterion.Relevance
-    )
+        )
     
-   docs = []
+      docs = []
     # This fetches the metadata and summary text ONLY
-   for result in client.results(search):
-        doc = Document(
+      for result in client.results(search):
+          doc = Document(
             page_content=result.summary, 
             metadata={
                 "title": result.title,
@@ -25,9 +26,14 @@ def Paper_fetcher(query):
                 "published": result.published.strftime("%Y-%m-%d")
             }
         )
-        docs.append(doc)
+          docs.append(doc)
     
-   return docs
+      return docs
+   except Exception as e:
+      print("arxiv error",e)
+      return []
+      
+   
 
 if __name__=="__main__":
    results=Paper_fetcher("EEG motor intent classification")

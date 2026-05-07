@@ -3,6 +3,9 @@ from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document 
 model=HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+import os
+
+persist_dir = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
 
 
 def store_papers(papers):
@@ -23,7 +26,7 @@ def store_papers(papers):
     vector_db=Chroma.from_documents(
     documents=split_docs,
     embedding=model,
-    persist_directory="./chroma_db"
+    persist_directory=persist_dir if persist_dir != "none" else None
     )
     return vector_db
 

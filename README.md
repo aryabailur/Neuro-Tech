@@ -43,6 +43,10 @@ structured analysis → Output displayed in Streamlit UI.
 
 ![Example Output](Neuro-agent_output.png)
 
+## Demo
+
+![Neuro-Tech Demo](assets/Neuro-tech_demo.gif)
+
 ## What I Learned
 
 Developing this project from scratch helped me understand useful concepts

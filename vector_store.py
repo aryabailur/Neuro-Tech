@@ -2,8 +2,12 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document 
-model=HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 import os
+
+if os.getenv("STREAMLIT_CLOUD"):
+    model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+else:
+    model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 
 persist_dir = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
 

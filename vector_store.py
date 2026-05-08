@@ -25,11 +25,19 @@ def store_papers(papers):
 
    
 
-    vector_db = Chroma.from_documents(
-        documents=split_docs,
-        embedding=model,
-        persist_directory=persist_dir if persist_dir != "none" else None
-    )
+    if persist_dir == "none":
+        # In-memory only — for Streamlit Cloud
+        vector_db = Chroma.from_documents(
+            documents=split_docs,
+            embedding=model
+        )
+    else:
+        # Persistent — for local development
+        vector_db = Chroma.from_documents(
+            documents=split_docs,
+            embedding=model,
+            persist_directory=persist_dir
+        )
 
     return vector_db
 
